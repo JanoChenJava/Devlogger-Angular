@@ -11,7 +11,17 @@ logs:Log[];
   constructor(private logService: LogService) { }
 
   ngOnInit() {
-    this.logs = this.logService.getLogs();
+    // Asyc use subsribe
+    this.logService.getLogs().subscribe(logs=>{
+      this.logs = logs;
+    });
   }
-
+  onSelect(log:Log){
+    this.logService.setFormLog(log);
+  }
+  onDelete(log:Log){
+    if (confirm('Are you sure?')) {
+      this.logService.deleteLog(log);
+    }
+  }
 }
